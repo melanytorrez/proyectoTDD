@@ -5,6 +5,9 @@ function ingresarCantidad(cantidad) {
     return cantidad;
 }
 function ingresarPrecio(precio) {
+    if (precio <= 0 || typeof precio !== "number") {
+        throw new Error("Precio debe ser un número mayor a 0");
+    }
     return precio;
 }
 function calcularPrecioNeto(cantidad, precio) {

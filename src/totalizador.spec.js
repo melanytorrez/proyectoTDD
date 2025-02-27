@@ -12,6 +12,7 @@ test('Cantidad inválida lanza error', () => {
     expect(() => ingresarCantidad(-2)).toThrow();
     expect(() => ingresarCantidad(3.5)).toThrow();
 });
+// Tests para ingresarPrecio
 test('Debe ingresar precio por ítem y mostrar el valor', () => {
     expect(ingresarPrecio(3)).toBe(3);
 });
