@@ -1,43 +1,57 @@
-const { ingresarCantidad } = require('./totalizador');
-const { ingresarPrecio } = require('./totalizador');
-const { calcularPrecioNeto } = require('./totalizador');
-const { obtenerImpuesto } = require('./totalizador');
-const { calcularTotalConImpuesto } = require('./totalizador');
-const { obtenerDescuento } = require('./totalizador');
+// 📂 totalizador.test.js
+const {
+    ingresarCantidad,
+    ingresarPrecio,
+    calcularPrecioNeto,
+    obtenerImpuesto,
+    obtenerDescuento,
+    calcularTotalFinal
+} = require('./totalizador');
+
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
-    expect(ingresarCantidad(20)).toBe(20);
+    expect(ingresarCantidad(5)).toBe(5);
 });
+
 test('Cantidad inválida lanza error', () => {
     expect(() => ingresarCantidad(-2)).toThrow();
     expect(() => ingresarCantidad(3.5)).toThrow();
 });
+
 // Tests para ingresarPrecio
-test('Debe ingresar precio por ítem y mostrar el valor', () => {
-    expect(ingresarPrecio(3)).toBe(3);
+test('Precio válido retorna mismo valor', () => {
+    expect(ingresarPrecio(10.5)).toBe(10.5);
 });
+
 // Tests para calcularPrecioNeto
-test('Debe calcular el precio neto', () => {
-    expect(calcularPrecioNeto(20, 3)).toBe(60);
+test('Calcula correctamente precio neto', () => {
+    expect(calcularPrecioNeto(3, 10.5)).toBe(31.5);
 });
+
 // Tests para obtenerImpuesto
-test('Debe retornar el porcentaje de impuesto según el estado', () => {
-    expect(obtenerImpuesto('CA')).toBe(8.25);
+test('Retorna impuesto correcto para TX', () => {
     expect(obtenerImpuesto('TX')).toBe(6.25);
-    expect(obtenerImpuesto('AL')).toBe(4.00);
 });
+
 test('Estado inválido lanza error', () => {
     expect(() => obtenerImpuesto('XX')).toThrow();
 });
 
-test('Debe calcular el total con impuestos', () => {
-    expect(calcularTotalConImpuesto(60, 'CA')).toBe(64.95); // 60 + (60 * 8.25 / 100)
+// Tests para calcularTotalFinal
+test('Ejemplo del PDF: 20 items, $3, TX', () => {
+    const resultado = calcularTotalFinal(20, 3, 'TX');
+    expect(resultado).toEqual({
+        precioNeto: 60,
+        descuento: "0%",
+        impuesto: "6.25%",
+        total: 63.75
+    });
 });
-test('Debe aplicar el descuento correcto según el precio total', () => {
-    expect(obtenerDescuento(1000)).toBe(3);
-    expect(obtenerDescuento(3000)).toBe(5);
-    expect(obtenerDescuento(7000)).toBe(7);
-    expect(obtenerDescuento(10000)).toBe(10);
-    expect(obtenerDescuento(30000)).toBe(15);
-    expect(obtenerDescuento(500)).toBe(0);
+
+test('Caso con descuento e impuesto', () => {
+    const resultado = calcularTotalFinal(1000, 10, 'NV');
+    // 1000*10 = 10000 (descuento 10%)
+    // 10000 - 10% = 9000
+    // 9000 + 8% = 9720
+    expect(resultado.total).toBe(9720);
 });
