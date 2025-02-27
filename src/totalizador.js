@@ -1,5 +1,8 @@
 function ingresarCantidad(cantidad) {
     return cantidad;
 }
+function ingresarPrecio(precio) {
+    return precio;
+}
 
-module.exports = { ingresarCantidad };
+module.exports = { ingresarCantidad,ingresarPrecio };
