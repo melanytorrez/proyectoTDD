@@ -21,6 +21,9 @@ function obtenerImpuesto(estado) {
         AL: 4.00,
         CA: 8.25
     };
+    if (!impuestos.hasOwnProperty(estado)) {
+        throw new Error("Código de estado no válido");
+    }
     return impuestos[estado] || 0;
 }
 function calcularTotalConImpuesto(precioNeto, estado) {
