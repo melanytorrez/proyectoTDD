@@ -17,5 +17,10 @@ function obtenerImpuesto(estado) {
     };
     return impuestos[estado] || 0;
 }
+function calcularTotalConImpuesto(precioNeto, estado) {
+    const impuesto = obtenerImpuesto(estado);
+    return precioNeto + (precioNeto * impuesto / 100);
+}
 
-module.exports = { ingresarCantidad,ingresarPrecio,calcularPrecioNeto,obtenerImpuesto };
+
+module.exports = { ingresarCantidad,ingresarPrecio,calcularPrecioNeto,obtenerImpuesto,calcularTotalConImpuesto };
