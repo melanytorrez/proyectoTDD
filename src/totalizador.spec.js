@@ -4,10 +4,14 @@ const { calcularPrecioNeto } = require('./totalizador');
 const { obtenerImpuesto } = require('./totalizador');
 const { calcularTotalConImpuesto } = require('./totalizador');
 const { obtenerDescuento } = require('./totalizador');
-test('Debe ingresar cantidad de ítems y mostrar el valor', () => {
+// Tests para ingresarCantidad
+test('Cantidad válida retorna mismo valor', () => {
     expect(ingresarCantidad(20)).toBe(20);
 });
-
+test('Cantidad inválida lanza error', () => {
+    expect(() => ingresarCantidad(-2)).toThrow();
+    expect(() => ingresarCantidad(3.5)).toThrow();
+});
 test('Debe ingresar precio por ítem y mostrar el valor', () => {
     expect(ingresarPrecio(3)).toBe(3);
 });

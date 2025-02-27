@@ -1,4 +1,7 @@
 function ingresarCantidad(cantidad) {
+    if (cantidad <= 0 || !Number.isInteger(cantidad)) {
+        throw new Error("Cantidad debe ser un entero mayor a 0");
+    }
     return cantidad;
 }
 function ingresarPrecio(precio) {
