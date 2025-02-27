@@ -7,5 +7,15 @@ function ingresarPrecio(precio) {
 function calcularPrecioNeto(cantidad, precio) {
     return cantidad * precio;
 }
+function obtenerImpuesto(estado) {
+    const impuestos = {
+        UT: 6.65,
+        NV: 8.00,
+        TX: 6.25,
+        AL: 4.00,
+        CA: 8.25
+    };
+    return impuestos[estado] || 0;
+}
 
-module.exports = { ingresarCantidad,ingresarPrecio,calcularPrecioNeto };
+module.exports = { ingresarCantidad,ingresarPrecio,calcularPrecioNeto,obtenerImpuesto };
