@@ -1,14 +1,14 @@
 // 📂 totalizador.js
 function ingresarCantidad(cantidad) {
-    if (cantidad <= 0 || !Number.isInteger(cantidad)) {
-        throw new Error("Cantidad debe ser un entero mayor a 0");
+    if (!Number.isInteger(cantidad) || cantidad <= 0) {
+        throw new Error(`Cantidad inválida: ${cantidad}. Debe ser un entero mayor a 0.`);
     }
     return cantidad;
 }
 
 function ingresarPrecio(precio) {
-    if (precio <= 0 || typeof precio !== "number") {
-        throw new Error("Precio debe ser un número mayor a 0");
+    if (!Number.isFinite(precio) || precio <= 0) {
+        throw new Error(`Precio inválido: ${precio}. Debe ser un número mayor a 0.`);
     }
     return precio;
 }
@@ -26,38 +26,45 @@ function obtenerImpuesto(estado) {
         CA: 8.25
     };
     if (!impuestos.hasOwnProperty(estado)) {
-        throw new Error("Código de estado no válido");
+        throw new Error(`Código de estado inválido: ${estado}`);
     }
     return impuestos[estado];
 }
 
-function obtenerDescuento(precioNeto) {
-    if (precioNeto >= 30000) return 15;
-    if (precioNeto >= 10000) return 10;
-    if (precioNeto >= 7000) return 7;
-    if (precioNeto >= 3000) return 5;
-    if (precioNeto >= 1000) return 3;
+function obtenerDescuento(precioConImpuesto) {
+    if (precioConImpuesto >= 30000) return 15;
+    if (precioConImpuesto >= 10000) return 10;
+    if (precioConImpuesto >= 7000) return 7;
+    if (precioConImpuesto >= 3000) return 5;
+    if (precioConImpuesto >= 1000) return 3;
     return 0;
 }
 
 function calcularTotalFinal(cantidad, precio, estado) {
-    // Validaciones básicas
+    // Validaciones
     const cantidadValidada = ingresarCantidad(cantidad);
     const precioValidado = ingresarPrecio(precio);
     
-    // Cálculos
+    // Cálculo del precio neto
     const precioNeto = calcularPrecioNeto(cantidadValidada, precioValidado);
-    const descuento = obtenerDescuento(precioNeto);
-    const precioConDescuento = precioNeto * (1 - descuento / 100);
+
+    // Aplicar impuesto primero
     const impuesto = obtenerImpuesto(estado);
-    const total = precioConDescuento * (1 + impuesto / 100);
-    
-    // Redondeo a 2 decimales
+    const montoImpuesto = (precioNeto * impuesto / 100).toFixed(2);
+    const precioConImpuesto = (parseFloat(precioNeto) + parseFloat(montoImpuesto)).toFixed(2);
+
+    // Aplicar descuento después del impuesto
+    const descuento = obtenerDescuento(precioConImpuesto);
+    const montoDescuento = (precioConImpuesto * descuento / 100).toFixed(2);
+    const total = (parseFloat(precioConImpuesto) - parseFloat(montoDescuento)).toFixed(2);
+
+    // Retornar el resultado con valores redondeados
     return {
         precioNeto: Number(precioNeto.toFixed(2)),
-        descuento: `${descuento}%`,
-        impuesto: `${impuesto}%`,
-        total: Number(total.toFixed(2))
+        impuesto: `${impuesto}% (+$${montoImpuesto})`,
+        precioConImpuesto: Number(precioConImpuesto),
+        descuento: `${descuento}% (-$${montoDescuento})`,
+        total: Number(total)
     };
 }
 
