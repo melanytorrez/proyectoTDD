@@ -108,3 +108,14 @@ test('Debe retornar el estado por defecto (CA) si el estado no es válido', () =
     expect(obtenerEstadoValido("XX")).toBe("CA");
     expect(obtenerEstadoValido("")).toBe("CA");
 });
+const { obtenerCategoriaValida } = require('./totalizador');
+
+test('Debe retornar la categoría ingresada si es válida', () => {
+    expect(obtenerCategoriaValida("Alimentos")).toBe("Alimentos");
+    expect(obtenerCategoriaValida("Electrónicos")).toBe("Electrónicos");
+});
+
+test('Debe retornar "Varios" si la categoría ingresada no es válida', () => {
+    expect(obtenerCategoriaValida("Juguetes")).toBe("Varios");
+    expect(obtenerCategoriaValida("")).toBe("Varios");
+});

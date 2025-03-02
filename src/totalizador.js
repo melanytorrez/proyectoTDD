@@ -72,6 +72,11 @@ function obtenerEstadoValido(estado) {
     const estadosValidos = ["UT", "NV", "TX", "AL", "CA"];
     return estadosValidos.includes(estado) ? estado : "CA";
 }
+function obtenerCategoriaValida(categoria) {
+    const categoriasValidas = ["Alimentos", "Bebidas alcohólicas", "Material de escritorio", 
+                               "Muebles", "Electrónicos", "Vestimenta", "Varios"];
+    return categoriasValidas.includes(categoria) ? categoria : "Varios";
+}
 
 
 
@@ -82,5 +87,6 @@ module.exports = {
     obtenerImpuesto,
     obtenerDescuento,
     calcularTotalFinal,
-    obtenerEstadoValido
+    obtenerEstadoValido,
+    obtenerCategoriaValida
 };
