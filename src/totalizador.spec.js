@@ -5,9 +5,9 @@ const {
     calcularPrecioNeto,
     obtenerImpuesto,
     obtenerDescuento,
-    calcularTotalFinal
+    calcularTotalFinal,
+    obtenerEstadoValido
 } = require('./totalizador');
-
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
     expect(ingresarCantidad(5)).toBe(5);
@@ -95,4 +95,16 @@ test('Caso con el mayor descuento (15%)', () => {
         descuento: "15% (-$4871.25)",
         total: 27603.75
     });
+});
+
+//nuevas funcionalidades
+
+test('Debe retornar el estado ingresado si es válido', () => {
+    expect(obtenerEstadoValido("TX")).toBe("TX");
+    expect(obtenerEstadoValido("NV")).toBe("NV");
+});
+
+test('Debe retornar el estado por defecto (CA) si el estado no es válido', () => {
+    expect(obtenerEstadoValido("XX")).toBe("CA");
+    expect(obtenerEstadoValido("")).toBe("CA");
 });

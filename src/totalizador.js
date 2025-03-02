@@ -67,6 +67,13 @@ function calcularTotalFinal(cantidad, precio, estado) {
         total: Number(total)
     };
 }
+// nuevas funcionalidades
+function obtenerEstadoValido(estado) {
+    const estadosValidos = ["UT", "NV", "TX", "AL", "CA"];
+    return estadosValidos.includes(estado) ? estado : "CA";
+}
+
+
 
 module.exports = {
     ingresarCantidad,
@@ -74,5 +81,6 @@ module.exports = {
     calcularPrecioNeto,
     obtenerImpuesto,
     obtenerDescuento,
-    calcularTotalFinal
+    calcularTotalFinal,
+    obtenerEstadoValido
 };
