@@ -78,6 +78,20 @@ function obtenerCategoriaValida(categoria) {
     return categoriasValidas.includes(categoria) ? categoria : "Varios";
 }
 
+function obtenerAjustesPorCategoria(categoria) {
+    const ajustes = {
+        "Alimentos": { impuesto: 0, descuento: 2 },
+        "Bebidas alcohólicas": { impuesto: 7, descuento: 0 },
+        "Material de escritorio": { impuesto: 0, descuento: 1.5 },
+        "Muebles": { impuesto: 3, descuento: 0 },
+        "Electrónicos": { impuesto: 4, descuento: 1 },
+        "Vestimenta": { impuesto: 2, descuento: 0 },
+        "Varios": { impuesto: 0, descuento: 0 }
+    };
+    return ajustes[categoria] || { impuesto: 0, descuento: 0 };
+}
+
+
 
 
 module.exports = {
@@ -88,5 +102,6 @@ module.exports = {
     obtenerDescuento,
     calcularTotalFinal,
     obtenerEstadoValido,
-    obtenerCategoriaValida
+    obtenerCategoriaValida,
+    obtenerAjustesPorCategoria
 };

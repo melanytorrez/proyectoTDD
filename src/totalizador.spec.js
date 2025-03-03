@@ -6,7 +6,8 @@ const {
     obtenerImpuesto,
     obtenerDescuento,
     calcularTotalFinal,
-    obtenerEstadoValido
+    obtenerEstadoValido,
+    obtenerAjustesPorCategoria
 } = require('./totalizador');
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
@@ -118,4 +119,11 @@ test('Debe retornar la categoría ingresada si es válida', () => {
 test('Debe retornar "Varios" si la categoría ingresada no es válida', () => {
     expect(obtenerCategoriaValida("Juguetes")).toBe("Varios");
     expect(obtenerCategoriaValida("")).toBe("Varios");
+});
+
+
+test('Debe retornar impuesto y descuento adicional por categoría', () => {
+    expect(obtenerAjustesPorCategoria("Alimentos")).toEqual({ impuesto: 0, descuento: 2 });
+    expect(obtenerAjustesPorCategoria("Electrónicos")).toEqual({ impuesto: 4, descuento: 1 });
+    expect(obtenerAjustesPorCategoria("Muebles")).toEqual({ impuesto: 3, descuento: 0 });
 });
