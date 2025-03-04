@@ -91,6 +91,18 @@ function obtenerAjustesPorCategoria(categoria) {
     return ajustes[categoria] || { impuesto: 0, descuento: 0 };
 }
 
+function calcularCostoEnvio(cantidad, pesoUnidad) {
+    let costoPorUnidad = 0;
+    if (pesoUnidad > 200) costoPorUnidad = 9;
+    else if (pesoUnidad > 100) costoPorUnidad = 8;
+    else if (pesoUnidad > 80) costoPorUnidad = 6.5;
+    else if (pesoUnidad > 40) costoPorUnidad = 6;
+    else if (pesoUnidad > 20) costoPorUnidad = 5;
+    else if (pesoUnidad > 10) costoPorUnidad = 3.5;
+
+    return cantidad * costoPorUnidad;
+}
+
 
 
 
@@ -103,5 +115,6 @@ module.exports = {
     calcularTotalFinal,
     obtenerEstadoValido,
     obtenerCategoriaValida,
-    obtenerAjustesPorCategoria
+    obtenerAjustesPorCategoria,
+    calcularCostoEnvio
 };

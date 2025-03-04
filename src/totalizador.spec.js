@@ -127,3 +127,10 @@ test('Debe retornar impuesto y descuento adicional por categoría', () => {
     expect(obtenerAjustesPorCategoria("Electrónicos")).toEqual({ impuesto: 4, descuento: 1 });
     expect(obtenerAjustesPorCategoria("Muebles")).toEqual({ impuesto: 3, descuento: 0 });
 });
+const { calcularCostoEnvio } = require('./totalizador');
+
+test('Debe calcular el costo de envío según el peso volumétrico por unidad', () => {
+    expect(calcularCostoEnvio(5, 10)).toBe(0);
+    expect(calcularCostoEnvio(3, 15)).toBe(10.5);  // 3 * 3.5
+    expect(calcularCostoEnvio(4, 50)).toBe(24);  // 4 * 6
+});
