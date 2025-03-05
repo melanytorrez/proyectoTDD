@@ -112,7 +112,11 @@ function obtenerDescuentoEnvioPorCliente(tipoCliente) {
     };
     return descuentos[tipoCliente] || 0;
 }
-
+function obtenerDescuentoFijoPorClienteYCategoria(tipoCliente, categoria, precioNeto) {
+    if (tipoCliente === "Recurrente" && categoria === "Alimentos" && precioNeto > 3000) return 100;
+    if (tipoCliente === "Especial" && categoria === "Electrónicos" && precioNeto > 7000) return 200;
+    return 0;
+}
 
 
 module.exports = {
@@ -126,5 +130,6 @@ module.exports = {
     obtenerCategoriaValida,
     obtenerAjustesPorCategoria,
     calcularCostoEnvio,
-    obtenerDescuentoEnvioPorCliente
+    obtenerDescuentoEnvioPorCliente,
+    obtenerDescuentoFijoPorClienteYCategoria
 };
