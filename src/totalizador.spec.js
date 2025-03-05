@@ -9,7 +9,8 @@ const {
     obtenerEstadoValido,
     obtenerAjustesPorCategoria,
     obtenerDescuentoEnvioPorCliente,
-    obtenerDescuentoFijoPorClienteYCategoria
+    obtenerDescuentoFijoPorClienteYCategoria,
+    calcularCostoEnvioConDescuento
 } = require('./totalizador');
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
@@ -159,4 +160,15 @@ test('Debe retornar el descuento fijo según el tipo de cliente y la categoría 
 test('Debe retornar 0 si el cliente no cumple las condiciones', () => {
     expect(obtenerDescuentoFijoPorClienteYCategoria("Recurrente", "Alimentos", 2000)).toBe(0);
     expect(obtenerDescuentoFijoPorClienteYCategoria("Especial", "Electrónicos", 6000)).toBe(0);
+});
+
+
+test('Debe calcular el costo de envío con el descuento por tipo de cliente', () => {
+    expect(calcularCostoEnvioConDescuento(50, "Normal")).toBe(50);
+    expect(calcularCostoEnvioConDescuento(50, "Recurrente")).toBe(49.75);
+    expect(calcularCostoEnvioConDescuento(50, "Especial")).toBe(49.25);
+});
+
+test('Si el descuento es 0%, el costo de envío no cambia', () => {
+    expect(calcularCostoEnvioConDescuento(30, "Normal")).toBe(30);
 });

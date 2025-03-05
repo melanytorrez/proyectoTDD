@@ -118,6 +118,11 @@ function obtenerDescuentoFijoPorClienteYCategoria(tipoCliente, categoria, precio
     return 0;
 }
 
+function calcularCostoEnvioConDescuento(costoEnvio, tipoCliente) {
+    const descuentoPorcentaje = obtenerDescuentoEnvioPorCliente(tipoCliente);
+    return parseFloat((costoEnvio * (1 - descuentoPorcentaje / 100)).toFixed(2));
+}
+
 
 module.exports = {
     ingresarCantidad,
@@ -131,5 +136,6 @@ module.exports = {
     obtenerAjustesPorCategoria,
     calcularCostoEnvio,
     obtenerDescuentoEnvioPorCliente,
-    obtenerDescuentoFijoPorClienteYCategoria
+    obtenerDescuentoFijoPorClienteYCategoria,
+    calcularCostoEnvioConDescuento
 };
