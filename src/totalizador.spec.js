@@ -10,7 +10,8 @@ const {
     obtenerAjustesPorCategoria,
     obtenerDescuentoEnvioPorCliente,
     obtenerDescuentoFijoPorClienteYCategoria,
-    calcularCostoEnvioConDescuento
+    calcularCostoEnvioConDescuento,
+    calcularTotalFinal1
 } = require('./totalizador');
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
@@ -171,4 +172,19 @@ test('Debe calcular el costo de envío con el descuento por tipo de cliente', ()
 
 test('Si el descuento es 0%, el costo de envío no cambia', () => {
     expect(calcularCostoEnvioConDescuento(30, "Normal")).toBe(30);
+});
+
+test('Debe calcular el total con impuestos, descuentos, costo de envío y descuentos adicionales', () => {
+    const resultado = calcularTotalFinal1(10, 50, "CA", "Alimentos", 15, "Especial");
+    
+    expect(resultado).toEqual({
+        precioNeto: 500,
+        impuesto: "8.25% (+$41.25)",
+        precioConImpuesto: 541.25,
+        descuentoCategoria: "2% (-$10.83)",
+        descuentoCliente: "-$0.00",
+        costoEnvio: "$35.00",
+        costoEnvioDescuento: "$34.48",
+        total: 564.90
+    });
 });

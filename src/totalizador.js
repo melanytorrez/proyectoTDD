@@ -122,6 +122,39 @@ function calcularCostoEnvioConDescuento(costoEnvio, tipoCliente) {
     const descuentoPorcentaje = obtenerDescuentoEnvioPorCliente(tipoCliente);
     return parseFloat((costoEnvio * (1 - descuentoPorcentaje / 100)).toFixed(2));
 }
+function calcularTotalFinal1(cantidad, precio, estado, categoria, pesoUnidad, tipoCliente) {
+    const cantidadValidada = ingresarCantidad(cantidad);
+    const precioValidado = ingresarPrecio(precio);
+    const estadoValidado = obtenerEstadoValido(estado);
+    const categoriaValidada = obtenerCategoriaValida(categoria);
+    
+    const precioNeto = calcularPrecioNeto(cantidadValidada, precioValidado);
+
+    const impuestoEstado = obtenerImpuesto(estadoValidado);
+    const ajustesCategoria = obtenerAjustesPorCategoria(categoriaValidada);
+    
+    const precioConImpuesto = precioNeto * (1 + (impuestoEstado + ajustesCategoria.impuesto) / 100);
+    
+    const descuentoCategoria = precioConImpuesto * (ajustesCategoria.descuento / 100);
+    const descuentoFijoCliente = obtenerDescuentoFijoPorClienteYCategoria(tipoCliente, categoriaValidada, precioNeto);
+    
+    const costoEnvio = calcularCostoEnvio(cantidadValidada, pesoUnidad);
+    const costoEnvioDescuento = calcularCostoEnvioConDescuento(costoEnvio, tipoCliente);
+
+    const total = precioConImpuesto - descuentoCategoria - descuentoFijoCliente + costoEnvioDescuento;
+    
+    return {
+        precioNeto: Number(precioNeto.toFixed(2)),
+        impuesto: `${impuestoEstado}% (+$${(precioNeto * impuestoEstado / 100).toFixed(2)})`,
+        precioConImpuesto: Number(precioConImpuesto.toFixed(2)),
+        descuentoCategoria: `${ajustesCategoria.descuento}% (-$${descuentoCategoria.toFixed(2)})`,
+        descuentoCliente: `-$${descuentoFijoCliente.toFixed(2)}`,
+        costoEnvio: `$${costoEnvio.toFixed(2)}`,
+        costoEnvioDescuento: `$${costoEnvioDescuento.toFixed(2)}`,
+        total: Number(total.toFixed(2))
+    };
+}
+
 
 
 module.exports = {
@@ -137,5 +170,6 @@ module.exports = {
     calcularCostoEnvio,
     obtenerDescuentoEnvioPorCliente,
     obtenerDescuentoFijoPorClienteYCategoria,
-    calcularCostoEnvioConDescuento
+    calcularCostoEnvioConDescuento,
+    calcularTotalFinal1
 };
