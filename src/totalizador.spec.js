@@ -7,7 +7,8 @@ const {
     obtenerDescuento,
     calcularTotalFinal,
     obtenerEstadoValido,
-    obtenerAjustesPorCategoria
+    obtenerAjustesPorCategoria,
+    obtenerDescuentoEnvioPorCliente 
 } = require('./totalizador');
 // Tests para ingresarCantidad
 test('Cantidad válida retorna mismo valor', () => {
@@ -133,4 +134,17 @@ test('Debe calcular el costo de envío según el peso volumétrico por unidad', 
     expect(calcularCostoEnvio(5, 10)).toBe(0);
     expect(calcularCostoEnvio(3, 15)).toBe(10.5);  // 3 * 3.5
     expect(calcularCostoEnvio(4, 50)).toBe(24);  // 4 * 6
+});
+
+
+test('Debe retornar el descuento en costo de envío según el tipo de cliente', () => {
+    expect(obtenerDescuentoEnvioPorCliente("Normal")).toBe(0);
+    expect(obtenerDescuentoEnvioPorCliente("Recurrente")).toBe(0.5);
+    expect(obtenerDescuentoEnvioPorCliente("Antiguo Recurrente")).toBe(1);
+    expect(obtenerDescuentoEnvioPorCliente("Especial")).toBe(1.5);
+});
+
+test('Debe retornar 0 si el tipo de cliente es inválido', () => {
+    expect(obtenerDescuentoEnvioPorCliente("Desconocido")).toBe(0);
+    expect(obtenerDescuentoEnvioPorCliente("")).toBe(0);
 });

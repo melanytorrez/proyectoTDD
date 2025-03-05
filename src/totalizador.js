@@ -103,6 +103,15 @@ function calcularCostoEnvio(cantidad, pesoUnidad) {
     return cantidad * costoPorUnidad;
 }
 
+function obtenerDescuentoEnvioPorCliente(tipoCliente) {
+    const descuentos = {
+        "Normal": 0,
+        "Recurrente": 0.5,
+        "Antiguo Recurrente": 1,
+        "Especial": 1.5
+    };
+    return descuentos[tipoCliente] || 0;
+}
 
 
 
@@ -116,5 +125,6 @@ module.exports = {
     obtenerEstadoValido,
     obtenerCategoriaValida,
     obtenerAjustesPorCategoria,
-    calcularCostoEnvio
+    calcularCostoEnvio,
+    obtenerDescuentoEnvioPorCliente
 };
