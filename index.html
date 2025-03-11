@@ -3,35 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Precios</title>
+    <title>Calculadora de Precios Totalizador</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos adicionales para nuevos elementos */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .resultado-detalle {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        
+        .resultado-linea {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+        }
+        
+        .total-final {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            border-top: 2px solid #3498db;
+            padding-top: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h2>Calculadora de Precios</h2>
+        <h2>Calculadora Totalizadora</h2>
         <form id="formulario">
-            <label for="cantidad">Canetidad de ítms:</label>
-            <input type="number" id="cantidad" min="1" required>
+            <div class="form-group">
+                <label for="cantidad">Cantidad de ítems:</label>
+                <input type="number" id="cantidad" min="1" required>
+            </div>
 
-            <label for="precio">Precio por ítem:</label>
-            <input type="number" id="precio" min="0.01" step="0.01" required>
+            <div class="form-group">
+                <label for="precio">Precio por item ($):</label>
+                <input type="number" id="precio" min="0.01" step="0.01" required>
+            </div>
 
-            <label for="estado">Código de estado:</label>
-            <select id="estado">
-                <option value="UT">UT</option>
-                <option value="NV">NV</option>
-                <option value="TX">TX</option>
-                <option value="AL">AL</option>
-                <option value="CA">CA</option>
-            </select>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado">
+                    <option value="CA">California (CA)</option>
+                    <option value="UT">Utah (UT)</option>
+                    <option value="NV">Nevada (NV)</option>
+                    <option value="TX">Texas (TX)</option>
+                    <option value="AL">Alabama (AL)</option>
+                    
+                </select>
+            </div>
 
-            <button type="submit">Totalizar</button>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria">
+                    <option value="Alimentos">Alimentos</option>
+                    <option value="Bebidas alcohólicas">Bebidas alcohólicas</option>
+                    <option value="Material de escritorio">Material de escritorio</option>
+                    <option value="Muebles">Muebles</option>
+                    <option value="Electrónicos">Electrónicos</option>
+                    <option value="Vestimenta">Vestimenta</option>
+                    <option value="Varios">Varios</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="peso">Peso por unidad (kg):</label>
+                <input type="number" id="peso" min="0.1" step="0.1" value="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cliente">Tipo de cliente:</label>
+                <select id="cliente">
+                    <option value="Normal">Normal</option>
+                    <option value="Recurrente">Recurrente</option>
+                    <option value="Antiguo Recurrente">Antiguo Recurrente</option>
+                    <option value="Especial">Especial</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-calcular">Calcular Total</button>
         </form>
 
-        <div id="resultado" class="resultado"></div>
+        <div id="resultado" class="resultado">
+            <div class="resultado-detalle">
+                <div class="resultado-linea">
+                    <span>Precio Neto:</span>
+                    <span id="precioNeto">$0.00</span>
+                </div>
+                <div class="resultado-linea">
+                    <span>Impuestos:</span>
+                    <span id="impuestos">$0.00</span>
+                </div>
+                <div class="resultado-linea">
+                    <span>Descuento Categoría:</span>
+                    <span id="descuentoCategoria">-$0.00</span>
+                </div>
+                <div class="resultado-linea">
+                    <span>Descuento Cliente:</span>
+                    <span id="descuentoCliente">-$0.00</span>
+                </div>
+                <div class="resultado-linea">
+                    <span>Costo Envío:</span>
+                    <span id="costoEnvio">$0.00</span>
+                </div>
+                <div class="resultado-linea">
+                    <span>Descuento Envío:</span>
+                    <span id="descuentoEnvio">$0.00</span>
+                </div>
+                <div class="resultado-linea total-final">
+                    <span>Total a Pagar:</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="./src/presenter.js" type="module"></script>
-
 </body>
 </html>
